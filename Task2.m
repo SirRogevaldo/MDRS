@@ -4,7 +4,7 @@ clear all, close all, clc
 % ------------------------------------------------------------------
 % Variables
 load('InputDataProject2.mat')
-fprintf('******  TASK 1 ******\n');
+fprintf('******  TASK 2 ******\n');
 T = [T1; T2];
 nFlows = size(T,1);
 nNodes = size(Nodes,1);
@@ -25,7 +25,8 @@ for f = 1:nFlows
 end
 
 timeLimit= 60;
-bestLoad= inf; % best = inf, worst = 0
+bestLoad= inf; 
+bestEne = inf;
 contador= 0;
 somador= 0;
 bestLinkEne = inf;
@@ -36,15 +37,16 @@ t = tic;
 while toc(t) < timeLimit
     % greedy randomzied start
     while maxLoad > Link_cap
-        [sol, maxLoad, Loads, Linkenergy] = GreedyRandomizedLOAD(nNodes, Links, T, sP, nSP, L, Link_cap);
+        [sol, maxLoad, Loads, Linkenergy] = GreedyRandomizedEne(nNodes, Links, T, sP, nSP, L, Link_cap);
     end
     % ---
 
-    [sol, maxLoad, Loads, Linkenergy] = HillClimbingLOAD(nNodes, Links, T, sP, nSP, sol, Loads, Linkenergy, L, Link_cap); %% nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L
+    [sol, maxLoad, Loads, Linkenergy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, Linkenergy, L, Link_cap); %% nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L
 
-    if maxLoad<bestLoad
+    if Linkenergy < bestEne
         bestSol= sol;
         bestLoad= maxLoad;
+        bestEne = Linkenergy;
         bestLoadTime = toc(t);
         LinkEne = LinkEne + Linkenergy;
     end

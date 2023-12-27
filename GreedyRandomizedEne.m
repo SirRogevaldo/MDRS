@@ -7,7 +7,6 @@ function [sol, maxLoad, Loads, linkEnergy] = GreedyRandomizedEne(nNodes, Links, 
     % iterate through each flow
     for flow = randFlows
         path_index = 0;
-        best_maxLoad = inf;
         best_Loads = inf;
         best_energy = inf;
 
@@ -17,13 +16,11 @@ function [sol, maxLoad, Loads, linkEnergy] = GreedyRandomizedEne(nNodes, Links, 
             sol(flow) = path;
             % calculate loads
             [Loads, linkEnergy] = calculateLinkLoadEnergy(nNodes, Links, T, sP, sol, L, Lcap);
-            maxLoad = max(max(Loads(:, 3:4)));
-            
+
             % check if the current load is better then bestLoad
-            if maxLoad < best_maxLoad
+            if linkEnergy < best_energy
                 % change index of path and load
                 path_index = path;
-                best_maxLoad = maxLoad;
                 best_Loads = Loads;
                 best_energy = linkEnergy;
             end

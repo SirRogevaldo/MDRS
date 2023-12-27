@@ -21,9 +21,8 @@ function [sol, maxLoad, Loads, linkEnergy] = HillClimbingEne(nNodes, Links, T, s
                     % calculate loads
                     [auxLoads, auxLinkEnergy] = calculateLinkLoadEnergy(nNodes, Links, T, sP, auxSol, L, Lcap);
                     auxMaxLoad = max(max(auxLoads(:, 3:4)));
-                        
                     % check if the current load is better then start load
-                    if auxMaxLoad < bestLocalLoad
+                    if auxLinkEnergy < bestLocalEnergy
                         bestLocalLoad = auxMaxLoad;
                         bestLocalLoads = auxLoads;
                         bestLocalSol = auxSol;
@@ -33,7 +32,7 @@ function [sol, maxLoad, Loads, linkEnergy] = HillClimbingEne(nNodes, Links, T, s
             end
         end
 
-        if bestLocalLoad < maxLoad
+        if bestLocalEnergy < linkEnergy
             maxLoad = bestLocalLoad;
             Loads = bestLocalLoads;
             sol = bestLocalSol;
