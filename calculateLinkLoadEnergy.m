@@ -30,12 +30,10 @@ function [Loads, linkEnergy] = calculateLinkLoadEnergy(nNodes, Links, T, sP, Sol
                 len = L(Loads(i, 1), Loads(i, 2));
                 
                 % energy calculation dependent of link capacity
-                if capacity == 50
-                    linkEnergy = linkEnergy + 6 + 0.2 * len;
-                elseif capacity == 100
-                    linkEnergy = linkEnergy + 8 + 0.3 * len;
+                if capacity == 100
+                    linkEnergy = linkEnergy + 9 + 0.3 * len;
                 else
-                    fprintf('Error: Link capacity is not 50Gbps nor 100Gbps\n');
+                    fprintf('Error: Link capacity is not 100Gbps\n');
                 end
             end
         end
