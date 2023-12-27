@@ -27,15 +27,18 @@ timeLimit= 60;
 bestLoad= inf; % best = inf, worst = 0
 contador= 0;
 somador= 0;
+bestLinkEne = inf;
+maxLoad = inf;
 t = tic;
 
 while toc(t) < timeLimit
     % greedy randomzied start
-    [sol, ~, Loads, energy] = GreedyRandomizedEne(nNodes, Links, T, sP, nSP, L, Link_cap);
-
+    while maxLoad > Link_cap
+        [sol, maxLoad, Loads, Linkenergy] = GreedyRandomizedEne(nNodes, Links, T, sP, nSP, L, Link_cap);
+    end
     % ---
 
-    [sol, maxLoad, Loads, energy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, energy, L, Link_cap); %% nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L
+    [sol, maxLoad, Loads, Linkenergy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, Linkenergy, L, Link_cap); %% nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L
 
     if maxLoad<bestLoad
         bestSol= sol;
@@ -56,7 +59,9 @@ for f=1:nFlows
     end
 end
 
-energy = sum(20 + 80 * sqrt(nodeTraf/Node_cap))
-
+NodeEnergy = sum(20 + 80 * sqrt(nodeTraf/Node_cap));
+TotalEne = NodeEnergy + Linkenergy;
 
 fprintf('Multi start hill climbing with greedy randomized (all possible paths):\n');
+fprintf('Worst link load of the solution: %f\n', maxLoad);
+fprintf('Total Ene: %f\n', TotalEne);

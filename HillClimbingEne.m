@@ -1,4 +1,4 @@
-function [sol, Loads, maxLoad, linkEnergy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L, Lcap)
+function [sol, maxLoad, Loads, linkEnergy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, linkEnergy, L, Lcap)
     nFlows = size(T,1);    
     % set the best local variables
     maxLoad = max(max(Loads(:, 3:4)));
