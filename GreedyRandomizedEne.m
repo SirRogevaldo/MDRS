@@ -28,6 +28,9 @@ function [sol, maxLoad, Loads, linkEnergy] = GreedyRandomizedEne(nNodes, Links, 
         sol(flow) = path_index;
     end
     Loads = best_Loads;
-    maxLoad = max(max(Loads(:, 3:4)));
+     maxLoad = 0; % Set a default value
+    if ~isempty(Loads) && size(Loads, 2) >= 4 % Check if Loads has data and sufficient columns
+        maxLoad = max(max(Loads(:, 3:4)));
+    end
     linkEnergy = best_energy;
 end
