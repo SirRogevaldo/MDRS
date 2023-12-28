@@ -40,6 +40,7 @@ while toc(t) < timeLimit
     end
 
     [sol, maxLoad, Loads, Linkenergy] = HillClimbingEne(nNodes, Links, T, sP, nSP, sol, Loads, Linkenergy, L, Link_cap); 
+    
     if Linkenergy < bestEne
         bestSol= sol;
         bestLoad= maxLoad;
@@ -112,8 +113,8 @@ fprintf('Multi start hill climbing with greedy randomized (all possible paths):\
 fprintf('Worst link load of the solution: %.2f Gbps\n', bestLoad);
 fprintf('Average link load of the solution: %.2f Gbps\n', AvgLinkLoad);
 fprintf('Network energy consumption of the solution: %.2f W\n\t\tNode energy: %.2f W\n\t\tLink energy: %.2f W\n', TotalEne, NodeEnergy, LinkEne);
-fprintf('Avg. Round trip propagation delay Service1: %.5f ms\n', mean(roundTripDelayService1));
-fprintf('Avg. Round trip propagation delay Service2: %.5f ms\n', mean(roundTripDelayService2(roundTripDelayService2 ~= 0)));
+fprintf('Avg. Round trip propagation delay Service1: %.2f ms\n', mean(roundTripDelayService1));
+fprintf('Avg. Round trip propagation delay Service2: %.2f ms\n', mean(roundTripDelayService2(roundTripDelayService2 ~= 0)));
 fprintf('Links not supporting any traffic flow: %d links -> {Src, Dest}: %s\n', NsleepLinks, sleepingLinks);
 fprintf('Number of cycles run by the algorithm: %d\n', contador);
 fprintf('Running time at which the algorithm has obtained the best solution: %.4f ms\n', bestLoadTime*1000);
@@ -220,7 +221,7 @@ TotalEne = NodeEnergy + LinkEne;
 
 auxSum = 0;
 cnt = 0;
-for k= 1:nFlows
+for k= 1:size(Loads, 1)
    if sum(Loads(k,3:4)) ~= 0
        cnt = cnt +2;
        auxSum = auxSum + sum(Loads(k,3:4));
@@ -232,8 +233,8 @@ fprintf('Multi start hill climbing with greedy randomized (all possible paths):\
 fprintf('Worst link load of the solution: %.2f Gbps\n', bestLoad);
 fprintf('Average link load of the solution: %.2f Gbps\n', AvgLinkLoad);
 fprintf('Network energy consumption of the solution: %.2f W\n\t\tNode energy: %.2f W\n\t\tLink energy: %.2f W\n', TotalEne, NodeEnergy, LinkEne);
-fprintf('Avg. Round trip propagation delay Service1: %.5f ms\n', mean(roundTripDelayService1));
-fprintf('Avg. Round trip propagation delay Service2: %.5f ms\n', mean(roundTripDelayService2(roundTripDelayService2 ~= 0)));
+fprintf('Avg. Round trip propagation delay Service1: %.2f ms\n', mean(roundTripDelayService1));
+fprintf('Avg. Round trip propagation delay Service2: %.2f ms\n', mean(roundTripDelayService2(roundTripDelayService2 ~= 0)));
 fprintf('Links not supporting any traffic flow: %d links -> {Src, Dest}: %s\n', NsleepLinks, sleepingLinks);
 fprintf('Number of cycles run by the algorithm: %d\n', contador);
 fprintf('Running time at which the algorithm has obtained the best solution: %.4f ms\n', bestLoadTime*1000);
