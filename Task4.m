@@ -389,7 +389,7 @@ end
     end
     
     nSP_any = nSP_any(nSP_any~=-1);                 % remove unwanted values
-    sP_any = sP_any(~cellfun(@isempty, sP_any));    % remove empty entry from the cell array<
+    sP_any = sP_any(~cellfun(@isempty, sP_any));    % remove empty entry from the cell array
 
  % New general matrix
 T_any = [T_any(:, 1) zeros(size(T_any,1), 1) T_any(:, 2:3)];
